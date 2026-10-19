@@ -1,0 +1,36 @@
+{
+ "id": "LU-02",
+ "folder": "Lunches",
+ "section": "High-Protein",
+ "title": "Tuna, White Bean and Herb Salad",
+ "cuisine": "Italian-inspired",
+ "difficulty": "Everyday",
+ "prep": "15 min",
+ "cook": "0 min",
+ "total": "15 min",
+ "serves": "4",
+ "nutrition": "About 35 g protein per serving.",
+ "ingredients": [
+  [
+   "Salad",
+   [
+    "3 cans (5 oz) tuna in olive oil",
+    "2 cans (15 oz) cannellini beans",
+    "1/2 red onion",
+    "1 cup parsley",
+    "2 Tbsp red wine vinegar",
+    "3 Tbsp olive oil",
+    "1/2 tsp kosher salt"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Combine",
+   "Toss everything together."
+  ]
+ ],
+ "ahead": "Keeps 3 days.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

@@ -1,0 +1,44 @@
+{
+ "id": "CS-1.1",
+ "folder": "Cooking_school",
+ "section": "Module 1 · Knife Skills",
+ "title": "Minestrone (Knife-Skills Lesson)",
+ "cuisine": "Italian",
+ "difficulty": "Intermediate",
+ "prep": "40 min",
+ "cook": "40 min",
+ "total": "1 hr 20 min",
+ "serves": "6",
+ "ingredients": [
+  [
+   "Soup",
+   [
+    "2 Tbsp olive oil",
+    "1 onion, 2 carrots, 2 celery ribs, small dice",
+    "2 cloves garlic, minced",
+    "1 zucchini, small dice",
+    "1 can (28 oz) diced tomatoes",
+    "6 cups chicken broth",
+    "1 can (15 oz) cannellini beans",
+    "1 cup small pasta",
+    "1 tsp kosher salt"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Mise en place",
+   "Cut every vegetable to an even 1/4-inch dice before you turn on the stove."
+  ],
+  [
+   "Sweat",
+   "Sweat the onion, carrot and celery in the oil 10 minutes without browning."
+  ],
+  [
+   "Simmer",
+   "Add the rest except the pasta; simmer 20 minutes, then add the pasta for 10."
+  ]
+ ],
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

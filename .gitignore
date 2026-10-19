@@ -1,0 +1,13 @@
+# Your personal settings and everything the agent learns about your household. Never commit these.
+config.json
+data/
+my-recipes/
+*.xlsx
+pantry.txt
+
+# python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store

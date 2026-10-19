@@ -1,0 +1,38 @@
+{
+ "id": "BF-02",
+ "folder": "Breakfast",
+ "section": "High-Protein",
+ "title": "Greek Yogurt Overnight Oats",
+ "cuisine": "American",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "0 min",
+ "total": "8 hr (chill)",
+ "serves": "4 jars",
+ "nutrition": "About 28 g protein per jar.",
+ "ingredients": [
+  [
+   "Oats",
+   [
+    "2 cups rolled oats",
+    "2 cups plain Greek yogurt",
+    "1.5 cups milk",
+    "2 Tbsp chia seeds",
+    "2 Tbsp maple syrup"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Mix",
+   "Stir everything together and divide into 4 jars."
+  ],
+  [
+   "Chill",
+   "Refrigerate overnight."
+  ]
+ ],
+ "ahead": "Keeps 4 days.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

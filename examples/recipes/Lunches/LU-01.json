@@ -1,0 +1,40 @@
+{
+ "id": "LU-01",
+ "folder": "Lunches",
+ "section": "High-Protein",
+ "title": "Chicken, Quinoa and Roasted Vegetable Bowls",
+ "cuisine": "American",
+ "difficulty": "Everyday",
+ "prep": "15 min",
+ "cook": "30 min",
+ "total": "45 min",
+ "serves": "4 bowls",
+ "nutrition": "About 45 g protein per bowl.",
+ "ingredients": [
+  [
+   "Bowls",
+   [
+    "1.5 lb chicken breast",
+    "1 cup quinoa",
+    "2 bell peppers",
+    "1 zucchini",
+    "2 Tbsp olive oil",
+    "1 tsp garlic powder",
+    "1 tsp kosher salt"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Roast",
+   "Roast the chicken and vegetables at 425°F for 25 minutes."
+  ],
+  [
+   "Cook",
+   "Cook the quinoa; divide everything into 4 containers."
+  ]
+ ],
+ "ahead": "Keeps 4 days.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

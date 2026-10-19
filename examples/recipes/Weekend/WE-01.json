@@ -1,0 +1,50 @@
+{
+ "id": "WE-01",
+ "folder": "Weekend",
+ "section": "Braise",
+ "title": "Slow-Braised Beef Ragù",
+ "cuisine": "Italian",
+ "difficulty": "Intermediate",
+ "prep": "20 min",
+ "cook": "3 hr",
+ "total": "3 hr 20 min",
+ "serves": "6",
+ "ingredients": [
+  [
+   "Ragù",
+   [
+    "2 lb chuck roast, in 2 pieces",
+    "2 Tbsp olive oil",
+    "1 onion, 1 carrot, 1 celery rib, finely chopped",
+    "2 Tbsp tomato paste",
+    "1 cup red wine",
+    "1 can (28 oz) whole tomatoes",
+    "1 tsp kosher salt"
+   ]
+  ],
+  [
+   "To serve",
+   [
+    "1 lb pappardelle",
+    "Parmesan"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Sear",
+   "Sear the beef well; remove."
+  ],
+  [
+   "Build",
+   "Soften the vegetables, add the tomato paste and wine, then the tomatoes and beef."
+  ],
+  [
+   "Braise",
+   "Cover and simmer gently 3 hours; shred into the sauce."
+  ]
+ ],
+ "ahead": "Better the next day; freezes well.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

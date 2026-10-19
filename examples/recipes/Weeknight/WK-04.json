@@ -1,0 +1,41 @@
+{
+ "id": "WK-04",
+ "folder": "Weeknight",
+ "section": "One Pot",
+ "title": "Turkey and White Bean Chili",
+ "cuisine": "American",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "35 min",
+ "total": "45 min",
+ "serves": "6",
+ "ingredients": [
+  [
+   "Chili",
+   [
+    "1 Tbsp olive oil",
+    "1 lb ground turkey",
+    "1 onion, diced",
+    "2 Tbsp chili powder",
+    "1 tsp ground cumin",
+    "2 cans (15 oz) white beans",
+    "1 can (28 oz) crushed tomatoes",
+    "1 cup chicken broth",
+    "1 tsp kosher salt"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Brown",
+   "Brown the turkey and onion in the oil."
+  ],
+  [
+   "Simmer",
+   "Add everything else and simmer 25 minutes."
+  ]
+ ],
+ "ahead": "Freezes up to 3 months.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

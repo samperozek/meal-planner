@@ -1,0 +1,425 @@
+<title>Kitchen Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow phone column — week strip, the dish card, then the rating form; built to be used one-handed at the stove. */
+:root {
+  --bg: #f4f6f2;
+  --surface: #ffffff;
+  --fg: #1d2420;
+  --muted: #5d6a62;
+  --line: #d9dfd8;
+  --accent: #b5760a;        /* saffron: stars, primary button */
+  --accent-ink: #ffffff;
+  --herb: #3e6b4f;          /* logged / cooked */
+  --herb-soft: #e3eee6;
+  --chip: #eceee9;
+  --warn: #a2412c;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141916; --surface: #1c2320; --fg: #e8ede9; --muted: #9aa8a0; --line: #2e3833;
+    --accent: #e3a43a; --accent-ink: #1a1405; --herb: #7fb592; --herb-soft: #22332a; --chip: #252e29; --warn: #e08a72;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141916; --surface: #1c2320; --fg: #e8ede9; --muted: #9aa8a0; --line: #2e3833;
+  --accent: #e3a43a; --accent-ink: #1a1405; --herb: #7fb592; --herb-soft: #22332a; --chip: #252e29; --warn: #e08a72;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.45; }
+.wrap { max-width: 34rem; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 18px; }
+header { display: grid; gap: 2px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.1; margin: 0; text-wrap: balance; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.day { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 10px;
+  padding: 8px 0 6px; display: grid; justify-items: center; gap: 2px; font: inherit; cursor: pointer; min-width: 0; }
+.day .dow { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.day .num { font-family: var(--display); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.day .dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; }
+.day.logged .dot { background: var(--herb); }
+.day.rest .num { color: var(--muted); }
+.day[aria-pressed="true"] { border-color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
+.day.future { opacity: .45; }
+.meals { display: flex; gap: 6px; flex-wrap: wrap; }
+.meal { appearance: none; border: 0; background: var(--chip); color: var(--fg); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+.meal[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.dish { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 14px; }
+.dish h2 { font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+.meta { font-size: 13px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.badge { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--herb-soft); color: var(--herb); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--chip); border-radius: 10px; padding: 3px; gap: 3px; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--fg); font: inherit; font-weight: 600; padding: 9px; border-radius: 8px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; display: block; }
+.stars { display: flex; gap: 4px; }
+.star { appearance: none; border: 0; background: none; padding: 2px; cursor: pointer; line-height: 0; color: var(--line); }
+.star svg { width: 40px; height: 40px; display: block; }
+.star.on { color: var(--accent); }
+.stars-caption { font-size: 13px; color: var(--muted); min-height: 1.2em; margin-top: 4px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 7px 12px; font: inherit; font-size: 14px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--herb-soft); border-color: var(--herb); color: var(--herb); font-weight: 600; }
+textarea { width: 100%; min-height: 84px; resize: vertical; font: inherit; font-size: 16px; color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.save { appearance: none; border: 0; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 700; font-size: 1.05rem;
+  padding: 14px; border-radius: 12px; cursor: pointer; width: 100%; }
+.save:disabled { opacity: .55; cursor: default; }
+.status { font-size: 14px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.status.ok { color: var(--herb); font-weight: 600; }
+.status.err { color: var(--warn); }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 20px; color: var(--muted); }
+.empty strong { color: var(--fg); display: block; font-family: var(--display); font-size: 1.15rem; margin-bottom: 4px; }
+.links { font-size: 13px; }
+.links a { color: var(--herb); }
+.rest-note { color: var(--muted); }
+.view { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+.view button { appearance: none; border: 0; background: none; color: var(--muted); font: inherit; font-weight: 600; padding: 8px 0 10px;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.view button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.recipe { display: grid; gap: 18px; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.fact { background: var(--chip); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.fact b { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.fact span { font-size: 14px; overflow-wrap: anywhere; }
+.pdf { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-weight: 700; color: var(--fg);
+  border: 1.5px solid var(--fg); border-radius: 12px; padding: 12px; }
+.group h3 { font-family: var(--display); font-size: 1rem; font-weight: 600; margin: 0 0 6px; }
+.ing { list-style: none; margin: 0; padding: 0; display: grid; }
+.ing li { border-bottom: 1px solid var(--line); }
+.ing button { appearance: none; border: 0; background: none; color: var(--fg); font: inherit; text-align: left; width: 100%;
+  padding: 9px 0 9px 30px; position: relative; cursor: pointer; line-height: 1.4; }
+.ing button::before { content: ""; position: absolute; left: 2px; top: 11px; width: 16px; height: 16px; border: 1.5px solid var(--muted); border-radius: 4px; }
+.ing button[aria-pressed="true"] { color: var(--muted); text-decoration: line-through; }
+.ing button[aria-pressed="true"]::before { background: var(--herb); border-color: var(--herb); }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; }
+.steps li::before { content: counter(s); font-family: var(--display); font-weight: 700; color: var(--accent); font-size: 1.15rem; line-height: 1.3; }
+.steps b { display: block; }
+.vids { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.vids a { color: var(--herb); font-weight: 600; text-decoration: none; }
+.vwhy { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.note { font-size: 14px; color: var(--muted); background: var(--chip); border-radius: 10px; padding: 10px 12px; }
+@media (prefers-reduced-motion: no-preference) { .star, .chip, .day { transition: transform .12s ease, background-color .12s ease; } .star:active { transform: scale(.9); } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow" id="eyebrow">Kitchen log</span>
+    <h1 id="headline">How did it go?</h1>
+  </header>
+
+  <div class="empty" id="empty">
+    <strong>Your week shows up here</strong>
+    After Friday's meal plan runs, each day's dinner, breakfast and lunch appear here so you can rate them in a few taps.
+  </div>
+
+  <div id="app" hidden>
+    <div style="display:grid;gap:14px">
+      <nav class="week" id="week" aria-label="Day"></nav>
+      <div class="meals" id="meals" role="group" aria-label="Meal"></div>
+
+      <section class="dish" id="dish" aria-live="polite">
+        <div>
+          <h2 id="dishTitle"></h2>
+          <div class="meta" id="dishMeta"></div>
+        </div>
+
+        <div class="view" role="tablist" id="viewTabs">
+          <button type="button" role="tab" id="tabRecipe" aria-selected="true">Recipe</button>
+          <button type="button" role="tab" id="tabRate" aria-selected="false">Rate it</button>
+        </div>
+
+        <div id="restBox" class="rest-note" hidden>No cooking tonight.</div>
+
+        <div id="recipeBox" class="recipe" hidden></div>
+
+        <div id="formBox" style="display:grid;gap:16px">
+          <div class="seg" role="group" aria-label="Did you make it?">
+            <button type="button" id="stCooked" aria-pressed="true">Made it</button>
+            <button type="button" id="stSkipped" aria-pressed="false">Skipped</button>
+          </div>
+
+          <div id="ratingBox">
+            <span class="label" id="ratingLabel">Rating</span>
+            <div class="stars" id="stars" role="radiogroup" aria-labelledby="ratingLabel"></div>
+            <div class="stars-caption" id="starsCaption"></div>
+          </div>
+
+          <div id="chipBox">
+            <span class="label">Quick notes</span>
+            <div class="chips" id="chips"></div>
+          </div>
+
+          <div>
+            <label class="label" for="note" id="noteLabel">Change next time</label>
+            <textarea id="note" placeholder="e.g. simmer 10 min longer, use thighs only"></textarea>
+          </div>
+
+          <button class="save" id="save" type="button">Save to cook log</button>
+          <div class="status" id="status" role="status"></div>
+        </div>
+
+        <div class="links" id="links"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.1 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>';
+  const CAPTIONS = ["", "Not again", "Meh", "Fine", "Good — keep it", "Favorite"];
+  const CHIPS = {
+    dinner: ["Kids loved it", "Kids weren't into it", "Make again", "Wouldn't make again", "Took too long", "Too bland", "Too salty", "Too spicy", "Sauce too thin", "Overcooked", "Needed a side", "Great leftovers"],
+    breakfast: ["Make again", "Wouldn't make again", "Kept well", "Got soggy / dry", "Too much prep", "Kept me full", "Got boring"],
+    lunch: ["Make again", "Wouldn't make again", "Kept well", "Got soggy / dry", "Too much prep", "Kept me full", "Got boring"],
+  };
+  const $ = (id) => document.getElementById(id);
+  const S = { db: null, plan: null, fb: {}, date: null, meal: "dinner", form: blank(), dirty: false, readOnly: false, view: "recipe", got: new Set() };
+
+  function blank() { return { status: "cooked", rating: 0, chips: [], note: "" }; }
+  function iso(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+  function parse(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+  const today = iso(new Date());
+  const key = () => `${S.date}_${S.meal}`;
+
+  function dayInfo(date) { return (S.plan?.days || []).find((d) => d.date === date); }
+  function dish() {
+    if (!S.plan || !S.date) return null;
+    if (S.meal === "dinner") { const d = dayInfo(S.date); return d ? (d.rest ? { rest: true, leftovers: d.leftovers } : d.dinner) : null; }
+    const bl = dayInfo(S.date)?.[S.meal] || S.plan[S.meal];  // per day: the window can span two plan weeks
+    if (!bl) return null;
+    const dow = parse(S.date).getDay();
+    if (S.meal === "lunch" && (dow === 0 || dow === 6)) return null;
+    return bl;
+  }
+
+  function pickDefault() {
+    if (!S.plan?.days?.length) return;
+    const fromHash = decodeURIComponent((location.hash || "").slice(1));
+    const dates = S.plan.days.map((d) => d.date);
+    if (!S.date || !dates.includes(S.date)) {
+      if (dates.includes(fromHash)) S.date = fromHash;
+      else if (dates.includes(today)) S.date = today;
+      else S.date = today > dates[dates.length - 1] ? dates[dates.length - 1] : dates[0];
+    }
+  }
+
+  function loadForm() {
+    const saved = S.fb[key()];
+    S.form = saved ? { status: saved.status || "cooked", rating: saved.rating || 0, chips: [...(saved.chips || [])], note: saved.note || "" } : blank();
+    S.dirty = false;
+    setStatus(saved ? `Saved ${new Date(saved.updated_at).toLocaleString([], { weekday: "short", hour: "numeric", minute: "2-digit" })}` : "", saved ? "ok" : "");
+  }
+
+  function renderWeek() {
+    const wk = $("week"); wk.textContent = "";
+    for (const d of S.plan.days) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "day";
+      const dt = parse(d.date);
+      if (d.rest) b.classList.add("rest");
+      if (d.date > today) b.classList.add("future");
+      if (S.fb[`${d.date}_dinner`] || S.fb[`${d.date}_breakfast`] || S.fb[`${d.date}_lunch`]) b.classList.add("logged");
+      b.setAttribute("aria-pressed", String(d.date === S.date));
+      b.setAttribute("aria-label", dt.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" }));
+      b.innerHTML = `<span class="dow">${dt.toLocaleDateString([], { weekday: "short" })}</span><span class="num">${dt.getDate()}</span><span class="dot"></span>`;
+      b.addEventListener("click", () => { S.date = d.date; S.view = d.date < today ? "rate" : "recipe"; loadForm(); render(); });
+      wk.appendChild(b);
+    }
+    const m = $("meals"); m.textContent = "";
+    for (const meal of ["dinner", "breakfast", "lunch"]) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "meal"; b.textContent = meal[0].toUpperCase() + meal.slice(1);
+      b.setAttribute("aria-pressed", String(meal === S.meal));
+      b.addEventListener("click", () => { S.meal = meal; loadForm(); render(); });
+      m.appendChild(b);
+    }
+  }
+
+  function renderDish() {
+    const d = dish();
+    const dt = parse(S.date);
+    $("eyebrow").textContent = `${S.date === today ? "Tonight · " : ""}${dt.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" })}`;
+    $("headline").textContent = S.view === "rate" ? (S.meal === "dinner" ? "How was dinner?" : `How was ${S.meal}?`)
+      : (S.meal === "dinner" ? (S.date === today ? "Tonight's dinner" : "Dinner") : S.meal[0].toUpperCase() + S.meal.slice(1));
+    $("links").textContent = "";
+    if (!d || d.rest) {
+      $("dishTitle").textContent = d?.rest ? (d.leftovers ? "Leftovers: " + d.leftovers : "Rest night") : (S.meal === "lunch" ? "No planned lunch this day" : "Nothing planned");
+      $("dishMeta").textContent = ""; $("formBox").hidden = true; $("recipeBox").hidden = true; $("viewTabs").hidden = true;
+      $("restBox").hidden = !d?.rest; return;
+    }
+    $("restBox").hidden = true; $("viewTabs").hidden = false;
+    $("tabRecipe").setAttribute("aria-selected", String(S.view === "recipe"));
+    $("tabRate").setAttribute("aria-selected", String(S.view === "rate"));
+    $("formBox").hidden = S.view !== "rate";
+    $("recipeBox").hidden = S.view !== "recipe";
+    renderRecipe(d);
+    $("dishTitle").textContent = d.title;
+    const meta = $("dishMeta"); meta.textContent = "";
+    if (d.lesson) { const s = document.createElement("span"); s.className = "badge"; s.textContent = "Lesson"; meta.appendChild(s); }
+    if (d.folder) { const s = document.createElement("span"); s.textContent = d.folder; meta.appendChild(s); }
+    if (d.url && S.view === "rate") {
+      const a = document.createElement("a"); a.href = d.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Original recipe online";
+      $("links").appendChild(a);
+    }
+    const f = S.form;
+    $("stCooked").setAttribute("aria-pressed", String(f.status === "cooked"));
+    $("stSkipped").setAttribute("aria-pressed", String(f.status === "skipped"));
+    $("ratingBox").hidden = f.status !== "cooked";
+    $("chipBox").hidden = f.status !== "cooked";
+    $("noteLabel").textContent = f.status === "cooked" ? "Change next time" : "What happened instead? (optional)";
+    $("note").placeholder = f.status === "cooked" ? "e.g. simmer 10 min longer, use thighs only" : "e.g. ordered pizza, moved it to Friday";
+    const stars = $("stars"); stars.textContent = "";
+    for (let i = 1; i <= 5; i++) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "star" + (i <= f.rating ? " on" : "");
+      b.setAttribute("role", "radio"); b.setAttribute("aria-checked", String(i === f.rating)); b.setAttribute("aria-label", `${i} star${i > 1 ? "s" : ""}`);
+      b.innerHTML = STAR;
+      b.addEventListener("click", () => { f.rating = f.rating === i ? 0 : i; S.dirty = true; setStatus(""); renderDish(); });
+      stars.appendChild(b);
+    }
+    $("starsCaption").textContent = CAPTIONS[f.rating] || "Tap to rate";
+    const chips = $("chips"); chips.textContent = "";
+    for (const c of CHIPS[S.meal]) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = c;
+      b.setAttribute("aria-pressed", String(f.chips.includes(c)));
+      b.addEventListener("click", () => {
+        f.chips = f.chips.includes(c) ? f.chips.filter((x) => x !== c) : [...f.chips, c];
+        S.dirty = true; setStatus(""); renderDish();
+      });
+      chips.appendChild(b);
+    }
+    if (document.activeElement !== $("note")) $("note").value = f.note;
+    $("save").disabled = S.readOnly || (f.status === "cooked" && !f.rating && !f.chips.length && !f.note.trim());
+  }
+
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function renderRecipe(d) {
+    const box = $("recipeBox"); box.textContent = "";
+    const r = S.plan?.recipes?.[d.id];
+    if (!r) { box.appendChild(el("div", "note", "This recipe's details aren't on the page yet. They're added with the next Friday plan.")); return; }
+    const facts = el("div", "facts");
+    for (const [k, v] of [["Serves", r.serves], [r.hands_on ? "Hands-on" : "Prep", r.hands_on || r.prep], ["Total", r.total]]) {
+      const f = el("div", "fact"); f.appendChild(el("b", null, k)); f.appendChild(el("span", null, v || "—")); facts.appendChild(f);
+    }
+    box.appendChild(facts);
+    if (r.pdf) {
+      const a = el("a", "pdf", "Open my recipe PDF"); a.href = r.pdf; a.target = "_blank"; a.rel = "noopener"; box.appendChild(a);
+    }
+    if (r.videos?.length) {
+      const vw = el("div"); vw.appendChild(el("span", "label", "Watch first"));
+      const ul = el("ul", "vids");
+      for (const v of r.videos) {
+        const li = el("li"); const a = el("a", null, "▶ " + v.title + (v.channel ? " · " + v.channel : "") + (v.length ? " · " + v.length : ""));
+        a.href = v.url; a.target = "_blank"; a.rel = "noopener"; li.appendChild(a);
+        if (v.why) li.appendChild(el("div", "vwhy", v.why));
+        ul.appendChild(li);
+      }
+      vw.appendChild(ul); box.appendChild(vw);
+    }
+    if (r.adapted) box.appendChild(el("div", "note", r.adapted));
+    for (const n of (Array.isArray(r.notes) ? r.notes : r.notes ? [r.notes] : [])) box.appendChild(el("div", "note", n));
+    const ingWrap = el("div"); ingWrap.appendChild(el("span", "label", "Ingredients · tap as you go"));
+    (r.ingredients || []).forEach(([group, items], gi) => {
+      const g = el("div", "group");
+      if (group && (r.ingredients.length > 1)) g.appendChild(el("h3", null, group));
+      const ul = el("ul", "ing");
+      items.forEach((it, ii) => {
+        const k = `${d.id}:${gi}:${ii}`;
+        const li = el("li"); const b = el("button", null, it); b.type = "button";
+        b.setAttribute("aria-pressed", String(S.got.has(k)));
+        b.addEventListener("click", () => { S.got.has(k) ? S.got.delete(k) : S.got.add(k); b.setAttribute("aria-pressed", String(S.got.has(k))); });
+        li.appendChild(b); ul.appendChild(li);
+      });
+      g.appendChild(ul); ingWrap.appendChild(g);
+    });
+    box.appendChild(ingWrap);
+    if (r.steps?.length) {
+      const sw = el("div"); sw.appendChild(el("span", "label", "Method"));
+      const ol = el("ol", "steps");
+      for (const [title, text] of r.steps) {
+        const li = el("li"); const body = el("div");
+        if (title) body.appendChild(el("b", null, title));
+        body.appendChild(el("span", null, text)); li.appendChild(body); ol.appendChild(li);
+      }
+      sw.appendChild(ol); box.appendChild(sw);
+    }
+    if (r.ahead) box.appendChild(el("div", "note", "Make ahead: " + r.ahead));
+    if (r.url) {
+      const p = el("div", "links"); const a = el("a", null, `Original recipe${r.source ? " · " + r.source : ""}`);
+      a.href = r.url; a.target = "_blank"; a.rel = "noopener"; p.appendChild(a); box.appendChild(p);
+    }
+  }
+
+  function render() {
+    const has = !!S.plan?.days?.length;
+    $("empty").hidden = has; $("app").hidden = !has;
+    if (!has) return;
+    renderWeek(); renderDish();
+  }
+
+  function setStatus(t, cls = "") { const s = $("status"); s.textContent = t; s.className = "status" + (cls ? " " + cls : ""); }
+
+  $("tabRecipe").addEventListener("click", () => { S.view = "recipe"; renderDish(); });
+  $("tabRate").addEventListener("click", () => { S.view = "rate"; renderDish(); });
+  $("stCooked").addEventListener("click", () => { S.form.status = "cooked"; S.dirty = true; setStatus(""); renderDish(); });
+  $("stSkipped").addEventListener("click", () => { S.form.status = "skipped"; S.form.rating = 0; S.form.chips = []; S.dirty = true; setStatus(""); renderDish(); });
+  $("note").addEventListener("input", (e) => { S.form.note = e.target.value; S.dirty = true; setStatus(""); renderDish(); });
+
+  $("save").addEventListener("click", async () => {
+    const d = dish(); if (!d || d.rest || !S.db) return;
+    const btn = $("save"); btn.disabled = true; setStatus("Saving…");
+    const body = {
+      date: S.date, meal: S.meal, id: d.id, title: d.title, status: S.form.status,
+      rating: S.form.status === "cooked" && S.form.rating ? S.form.rating : null,
+      chips: S.form.status === "cooked" ? S.form.chips : [], note: S.form.note.trim(), updated_at: new Date().toISOString(),
+    };
+    try {
+      await S.db.doc("feedback/" + key()).set(body);
+      S.dirty = false;
+      setStatus("Saved. It goes in your cook log at the next 4 PM text or Friday plan.", "ok");
+    } catch (e) {
+      if (e?.code === "unavailable") {
+        try { await new Promise((r) => setTimeout(r, 600 + Math.random() * 600)); await S.db.doc("feedback/" + key()).set(body); S.dirty = false; setStatus("Saved.", "ok"); return; }
+        catch (e2) { e = e2; }
+      }
+      if (e?.code === "invalid_argument") { S.readOnly = true; setStatus("This view can't save feedback. Open the page while signed in to your Claude account.", "err"); }
+      else if (e?.code === "quota_exceeded") setStatus("The log is full. Ask Claude to clear out old feedback.", "err");
+      else setStatus("Couldn't save. Check your connection and tap Save again.", "err");
+    } finally { renderDish(); }
+  });
+
+  window.addEventListener("hashchange", () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (S.plan?.days?.some((d) => d.date === h)) { S.date = h; S.meal = "dinner"; loadForm(); render(); }
+  });
+
+  render();
+  claude.use("db").then((db) => {
+    if (!db) { $("empty").innerHTML = "<strong>Open this in your Claude account</strong>Feedback saves only when you're signed in to claude.ai."; return; }
+    S.db = db;
+    db.doc("plan/current").onSnapshot((snap) => {
+      S.plan = snap.exists ? snap.data() : null;
+      const before = S.date; pickDefault();
+      if (before !== S.date || !S.dirty) loadForm();
+      render();
+    }, () => setStatus("Lost the connection to your plan. Reload the page.", "err"));
+    db.collection("feedback").orderBy("date", "desc").limit(120).onSnapshot((q) => {
+      const next = {}; q.docs.forEach((d) => { next[d.id] = d.data(); });
+      S.fb = next;
+      if (!S.dirty && S.plan) loadForm();
+      render();
+    }, () => setStatus("Lost the connection to your saved feedback. Reload the page.", "err"));
+  });
+})();
+</script>

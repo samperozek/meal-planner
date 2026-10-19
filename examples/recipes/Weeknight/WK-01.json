@@ -1,0 +1,44 @@
+{
+ "id": "WK-01",
+ "folder": "Weeknight",
+ "section": "Sheet Pan",
+ "title": "Sheet-Pan Lemon Chicken Thighs and Potatoes",
+ "cuisine": "Mediterranean",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "40 min",
+ "total": "50 min",
+ "serves": "4",
+ "ingredients": [
+  [
+   "Main",
+   [
+    "2 lb boneless skinless chicken thighs",
+    "1.5 lb small potatoes, halved",
+    "1 red onion, cut in wedges",
+    "3 Tbsp olive oil",
+    "1 lemon, zested and juiced",
+    "2 tsp dried oregano",
+    "1 tsp kosher salt",
+    "1/2 tsp black pepper"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Heat the oven",
+   "Heat to 425°F with a rack in the upper third."
+  ],
+  [
+   "Toss",
+   "Toss everything on a rimmed sheet pan in one layer."
+  ],
+  [
+   "Roast",
+   "Roast 35–40 minutes, until the chicken reaches 175°F and the potatoes are browned."
+  ]
+ ],
+ "ahead": "Leftovers keep 3 days in the fridge.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

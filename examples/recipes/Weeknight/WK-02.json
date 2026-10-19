@@ -1,0 +1,50 @@
+{
+ "id": "WK-02",
+ "folder": "Weeknight",
+ "section": "Skillet",
+ "title": "Black Bean and Sweet Potato Tacos",
+ "cuisine": "Mexican-inspired",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "20 min",
+ "total": "30 min",
+ "serves": "4",
+ "ingredients": [
+  [
+   "Filling",
+   [
+    "1 large sweet potato, diced",
+    "2 Tbsp olive oil",
+    "2 tsp chili powder",
+    "1 tsp ground cumin",
+    "1/2 tsp kosher salt",
+    "1 can (15 oz) black beans, drained"
+   ]
+  ],
+  [
+   "To serve",
+   [
+    "8 corn tortillas",
+    "1 avocado",
+    "1 lime",
+    "1/2 cup crumbled cotija"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Cook",
+   "Cook the sweet potato in the oil over medium-high heat for 10 minutes, stirring."
+  ],
+  [
+   "Season",
+   "Add the spices, salt and beans; cook 3 minutes."
+  ],
+  [
+   "Serve",
+   "Warm the tortillas and fill with the mixture, avocado, lime and cheese."
+  ]
+ ],
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

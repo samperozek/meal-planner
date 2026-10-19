@@ -1,0 +1,45 @@
+{
+ "id": "CS-1.2",
+ "folder": "Cooking_school",
+ "section": "Module 1 · Knife Skills",
+ "title": "Chopped Salad with Shallot Vinaigrette (Knife-Skills Lesson)",
+ "cuisine": "American",
+ "difficulty": "Intermediate",
+ "prep": "30 min",
+ "cook": "0 min",
+ "total": "30 min",
+ "serves": "4",
+ "ingredients": [
+  [
+   "Salad",
+   [
+    "1 head romaine",
+    "1 cucumber",
+    "1 pint cherry tomatoes",
+    "1 can (15 oz) chickpeas"
+   ]
+  ],
+  [
+   "Vinaigrette",
+   [
+    "1 shallot, minced",
+    "3 Tbsp red wine vinegar",
+    "1 tsp Dijon mustard",
+    "1/2 cup olive oil",
+    "1/2 tsp kosher salt"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Cut",
+   "Chop everything to the size of a chickpea."
+  ],
+  [
+   "Emulsify",
+   "Whisk the vinegar, shallot, mustard and salt, then the oil in a thin stream."
+  ]
+ ],
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

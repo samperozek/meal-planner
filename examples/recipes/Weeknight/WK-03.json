@@ -1,0 +1,49 @@
+{
+ "id": "WK-03",
+ "folder": "Weeknight",
+ "section": "Skillet",
+ "title": "Garlic Shrimp with Rice and Peas",
+ "cuisine": "American",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "15 min",
+ "total": "25 min",
+ "serves": "4",
+ "ingredients": [
+  [
+   "Main",
+   [
+    "1.25 lb peeled shrimp",
+    "4 cloves garlic, sliced",
+    "2 Tbsp butter",
+    "1 Tbsp olive oil",
+    "1/4 tsp red pepper flakes",
+    "1/2 tsp kosher salt",
+    "1 cup frozen peas",
+    "1 lemon"
+   ]
+  ],
+  [
+   "To serve",
+   [
+    "Cooked white rice, for serving"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Sear",
+   "Sear the shrimp in the oil and butter, 2 minutes a side."
+  ],
+  [
+   "Finish",
+   "Add the garlic, pepper flakes, peas and lemon juice; cook 2 minutes."
+  ],
+  [
+   "Serve",
+   "Serve over rice."
+  ]
+ ],
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

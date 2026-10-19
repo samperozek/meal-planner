@@ -1,0 +1,49 @@
+{
+ "id": "GL-01",
+ "folder": "Global",
+ "section": "Curry",
+ "title": "Chickpea and Spinach Coconut Curry",
+ "cuisine": "Indian-inspired",
+ "difficulty": "Everyday",
+ "prep": "10 min",
+ "cook": "25 min",
+ "total": "35 min",
+ "serves": "4",
+ "ingredients": [
+  [
+   "Curry",
+   [
+    "1 Tbsp coconut oil",
+    "1 onion, diced",
+    "1 Tbsp grated ginger",
+    "2 Tbsp curry powder",
+    "2 cans (15 oz) chickpeas, drained",
+    "1 can (13.5 oz) coconut milk",
+    "5 oz baby spinach",
+    "1 tsp kosher salt"
+   ]
+  ],
+  [
+   "To serve",
+   [
+    "Cooked brown rice, for serving"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Soften",
+   "Cook the onion and ginger in the oil 5 minutes."
+  ],
+  [
+   "Simmer",
+   "Add the curry powder, chickpeas and coconut milk; simmer 15 minutes."
+  ],
+  [
+   "Finish",
+   "Stir in the spinach until wilted. Serve with rice."
+  ]
+ ],
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}

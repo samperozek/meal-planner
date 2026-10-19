@@ -1,0 +1,114 @@
+{
+  "cook": {
+    "name": "Alex",
+    "email": "alex@example.com"
+  },
+  "household": {
+    "description": "2 adults + 2 young kids",
+    "dinner_servings": 4,
+    "notes": "Kids are 6 and 3. No allergies."
+  },
+  "diet": {
+    "allergies": [],
+    "style": "none",
+    "avoid": [
+      "olives"
+    ],
+    "limit": [
+      "red meat: at most 1 dinner a week"
+    ],
+    "notes": "High-protein breakfast and lunch (40+ g) for the cook."
+  },
+  "preferences": {
+    "cuisines_love": [
+      "Mexican",
+      "Italian",
+      "Thai"
+    ],
+    "cuisines_avoid": [],
+    "spice": "medium",
+    "adventurousness": "a mix"
+  },
+  "cooking": {
+    "max_cook_nights": 5,
+    "weeknight_hands_on_max": 20,
+    "weekend_project": true,
+    "equipment": [
+      "slow cooker",
+      "instant pot",
+      "sheet pans",
+      "dutch oven"
+    ]
+  },
+  "lessons": {
+    "cadence": "weekly",
+    "focus": "classic French technique"
+  },
+  "location": {
+    "name": "Denver, CO",
+    "lat": 39.7392,
+    "lon": -104.9903,
+    "units": "imperial"
+  },
+  "paths": {
+    "data_dir": "data",
+    "recipes_dir": "examples/recipes"
+  },
+  "recipes": {
+    "dinner_pools": {
+      "core": [
+        "Weeknight"
+      ],
+      "sprinkle": [
+        "Global"
+      ],
+      "weekend_extra": [
+        "Weekend"
+      ]
+    },
+    "lesson_folder": "Cooking_school",
+    "lesson_label": "Cooking School",
+    "breakfast_pool": {
+      "folder": "Breakfast",
+      "section": "High-Protein"
+    },
+    "lunch_pool": {
+      "folder": "Lunches",
+      "section": "High-Protein"
+    }
+  },
+  "calendars": {
+    "read": [
+      "primary"
+    ],
+    "skip_keywords": [
+      "Holidays",
+      "Week Numbers",
+      "Birthdays"
+    ],
+    "busy_window": "16:00-20:00"
+  },
+  "store": {
+    "name": "Amazon Whole Foods",
+    "storefront_url": "https://www.amazon.com/alm/storefront?almBrandId=VUZHIFdob2xlIEZvb2Rz",
+    "cart_url": "https://www.amazon.com/cart/localmarket?almBrandId=VUZHIFdob2xlIEZvb2Rz",
+    "brand_preferences": "Store brand for packaged goods, organic produce when available"
+  },
+  "orders": {
+    "two_orders": true,
+    "order1_day": "Sunday",
+    "order2_day": "Thursday",
+    "order2_fill_day": "Wednesday",
+    "order2_dinners": [
+      "Fri",
+      "Sat",
+      "Sun"
+    ]
+  },
+  "imessage": {
+    "to": "+15555550123"
+  },
+  "kitchen_log": {
+    "url": ""
+  }
+}

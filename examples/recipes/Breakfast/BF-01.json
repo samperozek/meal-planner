@@ -1,0 +1,43 @@
+{
+ "id": "BF-01",
+ "folder": "Breakfast",
+ "section": "High-Protein",
+ "title": "Egg and Turkey Sausage Breakfast Burritos",
+ "cuisine": "American",
+ "difficulty": "Everyday",
+ "prep": "15 min",
+ "cook": "15 min",
+ "total": "30 min",
+ "serves": "6 burritos",
+ "nutrition": "About 30 g protein each.",
+ "ingredients": [
+  [
+   "Filling",
+   [
+    "10 eggs",
+    "12 oz turkey breakfast sausage",
+    "1 cup shredded cheddar",
+    "1/2 tsp kosher salt"
+   ]
+  ],
+  [
+   "Wrap",
+   [
+    "6 large flour tortillas"
+   ]
+  ]
+ ],
+ "steps": [
+  [
+   "Cook",
+   "Brown the sausage; scramble in the eggs."
+  ],
+  [
+   "Roll",
+   "Fill, roll and wrap each in foil."
+  ]
+ ],
+ "ahead": "Fridge 4 days, freezer 3 months.",
+ "source": "Sample recipe written for meal-plan-agent",
+ "url": null
+}
