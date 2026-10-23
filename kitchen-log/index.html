@@ -74,6 +74,8 @@ textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent);
 .status { font-size: 14px; color: var(--muted); text-align: center; min-height: 1.4em; }
 .status.ok { color: var(--herb); font-weight: 600; }
 .status.err { color: var(--warn); }
+.demo { font-size: 13px; color: var(--muted); background: var(--chip); border-radius: 10px; padding: 8px 12px; }
+.demo a { color: var(--herb); font-weight: 600; }
 .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 20px; color: var(--muted); }
 .empty strong { color: var(--fg); display: block; font-family: var(--display); font-size: 1.15rem; margin-bottom: 4px; }
 .links { font-size: 13px; }
@@ -110,6 +112,7 @@ textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent);
 </style>
 
 <div class="wrap">
+  <div class="demo" id="demoBanner" hidden>Demo with sample recipes. Ratings stay in your browser. <a href="https://github.com/samperozek/meal-planner" target="_blank" rel="noopener">Build your own meal planner</a></div>
   <header>
     <span class="eyebrow" id="eyebrow">Kitchen log</span>
     <h1 id="headline">How did it go?</h1>
@@ -377,13 +380,19 @@ textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent);
   $("note").addEventListener("input", (e) => { S.form.note = e.target.value; S.dirty = true; setStatus(""); renderDish(); });
 
   $("save").addEventListener("click", async () => {
-    const d = dish(); if (!d || d.rest || !S.db) return;
+    const d = dish(); if (!d || d.rest || (!S.db && !S.demo)) return;
     const btn = $("save"); btn.disabled = true; setStatus("Saving…");
     const body = {
       date: S.date, meal: S.meal, id: d.id, title: d.title, status: S.form.status,
       rating: S.form.status === "cooked" && S.form.rating ? S.form.rating : null,
       chips: S.form.status === "cooked" ? S.form.chips : [], note: S.form.note.trim(), updated_at: new Date().toISOString(),
     };
+    if (S.demo) {
+      S.fb[key()] = body; S.dirty = false;
+      try { localStorage.setItem("kitchen-demo-fb", JSON.stringify(S.fb)); } catch (e) { /* storage unavailable: keep it in memory */ }
+      setStatus("Saved (demo). In your own Kitchen Log, this goes into your cook log and shapes next week's plan.", "ok");
+      render(); return;
+    }
     try {
       await S.db.doc("feedback/" + key()).set(body);
       S.dirty = false;
@@ -404,6 +413,22 @@ textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent);
     if (S.plan?.days?.some((d) => d.date === h)) { S.date = h; S.meal = "dinner"; loadForm(); render(); }
   });
 
+  if (window.KITCHEN_DEMO) {
+    // Demo mode: sample data embedded in the page, shifted onto the current week; ratings stay in this browser.
+    const demo = JSON.parse(JSON.stringify(window.KITCHEN_DEMO));
+    const now = new Date(); const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((now.getDay() + 6) % 7));
+    const shift = Math.round((monday - parse(demo.days[0].date)) / 86400000);
+    for (const d of demo.days) { const t = parse(d.date); t.setDate(t.getDate() + shift); d.date = iso(t); }
+    S.plan = demo; S.demo = true;
+    try { S.fb = JSON.parse(localStorage.getItem("kitchen-demo-fb") || "{}"); } catch (e) { S.fb = {}; }
+    $("demoBanner").hidden = false;
+    pickDefault();
+    // open on a real dinner: skip forward (wrapping) past rest and leftovers nights
+    const idx = demo.days.findIndex((d) => d.date === S.date);
+    for (let k = 0; k < demo.days.length; k++) { const d = demo.days[(idx + k) % demo.days.length]; if (!d.rest) { S.date = d.date; break; } }
+    loadForm(); render();
+    return;
+  }
   render();
   claude.use("db").then((db) => {
     if (!db) { $("empty").innerHTML = "<strong>Open this in your Claude account</strong>Feedback saves only when you're signed in to claude.ai."; return; }

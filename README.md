@@ -60,6 +60,7 @@ A 4 PM text adds tonight's start time, scaling notes, technique videos, your "la
 - **No Mac?** Planning, the grocery list, the plan PDF and the Kitchen Log all work anywhere Claude Code runs. Texts use iMessage and the scheduled routines use the Claude desktop app, so on other systems you run `/meal-plan` yourself and read the plan PDF.
 - **A different grocery store?** The cart step is written for Amazon Whole Foods. For another store, tell the setup skill; the rules (search, pick the best match, never check out) carry over, but you'll want to test the first run with it.
 - **Outside the US?** Set `location.units` to `"metric"`. The forecast (Open-Meteo) is worldwide. Ask the research agents for recipes in metric units.
+- **Can I show someone the Kitchen Log?** `python3 setup/tools/build_demo.py` makes a self-contained demo page (recipes embedded, ratings stay in the viewer's browser) that you can publish as an Artifact and share. Build it from recipes you're free to share, like the samples.
 - **Do I have to build a big collection first?** No. A 25–30 recipe starter build is enough to start planning, and you can grow it any time ("add 10 more weeknight dinners").
 - **Where do recipes come from?** Established, published recipes only: respected chefs, test kitchens and highly rated sites, with ingredients as published, the method in Claude's words and the source credited. Keep your collection private.
 
@@ -70,8 +71,8 @@ A 4 PM text adds tonight's start time, scaling notes, technique videos, your "la
 planner/                          planner.py, pantry.py, cooklog.py, imessage.py and friends
 setup/briefs/                     instructions for the recipe- and video-research agents
 setup/templates/                  interview questions, category patterns, curriculum design
-setup/tools/                      install.sh, fetch_recipe.py, find_videos.py, validate_recipes.py, verify_videos.py, recipe_pdf.py
-kitchen-log/                      the private recipe + rating page
+setup/tools/                      install.sh, fetch_recipe.py, find_videos.py, validate_recipes.py, verify_videos.py, recipe_pdf.py, build_demo.py
+kitchen-log/                      the private recipe + rating page (with a shareable demo mode)
 scheduled-tasks/                  prompts for the Friday, Wednesday and 4 PM routines
 examples/recipes/                 short sample recipes and the recipe format
 tests/                            an end-to-end smoke test (runs on every push)

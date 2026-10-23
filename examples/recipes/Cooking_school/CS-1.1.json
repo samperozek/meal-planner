@@ -40,5 +40,14 @@
   ]
  ],
  "source": "Sample recipe written for meal-plan-agent",
- "url": null
+ "url": null,
+ "videos": [
+  {
+   "title": "Jacques Pépin Techniques: Proper Knife Skills for Cutting, Chopping and Slicing",
+   "channel": "KQED Food",
+   "url": "https://www.youtube.com/watch?v=nffGuGwCE3E",
+   "length": "4 min",
+   "why": "Watch how he grips the knife at the blade and curls his guiding fingers so his knuckles steer the cut, then squares off vegetables for even dice."
+  }
+ ]
 }
